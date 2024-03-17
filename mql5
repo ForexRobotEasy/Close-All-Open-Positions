@@ -1,0 +1,62 @@
+
+// Program: Close All Open Positions
+// Developer: Forex Robot Easy Team
+// Developer's Site: forexroboteasy.com
+
+// Function to close all open positions in a trading account
+void CloseAllOpenPositions()
+{
+    // Get the total number of open positions
+    int totalPositions = PositionsTotal();
+    
+    // Loop through each open position
+    for (int i = 0; i < totalPositions; i++)
+    {
+        // Get the position ticket number
+        ulong ticket = PositionGetTicket(i);
+        
+        // Close the position
+        if (!PositionClose(ticket))
+        {
+            // Handle error if position cannot be closed
+            Print('Error closing position ', ticket);
+        }
+        else
+        {
+            Print('Position ', ticket, ' closed successfully');
+        }
+    }
+}
+
+// Event handler for the button click event
+void OnButtonClick()
+{
+    // Call the close all open positions function
+    CloseAllOpenPositions();
+}
+
+// Entry point of the program
+int OnInit()
+{
+    // Create a button on the software's user interface
+    int buttonId = ButtonCreate('Close All Positions', 0, 0, 100, 30);
+    
+    // Set the button's click event handler
+    ButtonSetOnClick(buttonId, OnButtonClick);
+    
+    return(INIT_SUCCEEDED);
+}
+
+// Main program loop
+void OnTick()
+{
+    // Keep the program running
+}
+
+// Program termination
+void OnDeinit(const int reason)
+{
+    // Remove the button from the user interface
+    ButtonRemove('Close All Positions');
+}
+```
